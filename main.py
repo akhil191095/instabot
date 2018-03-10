@@ -4,6 +4,7 @@ from pprint import pprint
 from textblob import TextBlob
 from textblob.sentiments import NaiveBayesAnalyzer
 
+#importing lib
 
 response = requests.get('https://api.jsonbin.io/b/59d0f30408be13271f7df29c').json()
 APP_ACCESS_TOKEN = response['access_token']
@@ -11,6 +12,8 @@ print response
 
 
 BASE_URL = "https://api.instagram.com/vi/"
+
+#saving base url in variable
 
 def owner_info():
     r = requests.get(" %susers/self/?access_token = %s "% (BASE_URL,APP_ACCESS_TOKEN)).json()
@@ -24,7 +27,7 @@ def owner_info():
 
     pprint(r)
 
-
+#getting owners information function
 
 
 def owner_post():
@@ -38,7 +41,7 @@ def owner_post():
     else:
         print "Status code other than 200 recieved "
 
-
+#downloading and viewing the post
 
 def get_user_id(uname):
     r = requests.get("%susers/search?q=%s&access_token=%s"%(BASE_URL,uname,APP_ACCESS_TOKEN)).json()
@@ -90,6 +93,8 @@ def like_post(uname):
         print "Like Successful"
     else:
         print "Like Unsuccessful"
+#liking the post
+
 
 def comment_post(uname):
     media_id = get_media_id(uname)
@@ -102,7 +107,7 @@ def comment_post(uname):
     else:
         print "Comment Unsuccessful"
 
-
+#commenting on the post
 
 def del_comment(uname):
     media_id = get_user_id(uname)
@@ -131,7 +136,7 @@ def del_comment(uname):
     else:
         print "Error"
 
-
+#deleting the comment which have negative influence
 
 def start_bot():
     show_menu = True
@@ -161,4 +166,4 @@ def start_bot():
         else:
             print "error"
 
-#start_bot()
+start_bot()

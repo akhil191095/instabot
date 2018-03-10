@@ -7,7 +7,7 @@ from textblob.sentiments import NaiveBayesAnalyzer
 
 response = requests.get('https://api.jsonbin.io/b/59d0f30408be13271f7df29c').json()
 APP_ACCESS_TOKEN = response['access_token']
-
+print response
 
 
 BASE_URL = "https://api.instagram.com/vi/"
@@ -112,7 +112,23 @@ def del_comment(uname):
             for index in range(0,len(r["data"])):
                 cmnt_id = r["data"]["index"]["id"]
                 cmnt_text = r["data"][index]["text"]
-    else
+                blob = TextBlob(cmnt_text, analyzer=NaiveBayesAnalyzer())
+                if blob.sentiment.p_neg > blob.sentiment.p_pos:
+                    print"Negative comment : %s" % cmnt_text
+                    print"Negative comment found: %s" % cmnt_text
+                    r = requests.delete("%smedia/%s/comments/%s/?access_token=%s" % (BASE_URL, media_id, cmnt_id, APP_ACCESS_TOKEN)).json()
+                    if r['meta']['code'] == 200:
+                        print"Comment successfully deleted!"
+                        print"Comment is deleted successfully!"
+                    else:
+                        print 'Could not delete the comment'
+
+                else:
+                    print cmnt_text + 'is a positive comment'
+                    print cmnt_text + ' is a positive comment'
+        else:
+            print" no comments found"
+    else:
         print "Error"
 
 
@@ -139,10 +155,10 @@ def start_bot():
             comment_post(username)
         elif query==7:
             username = raw_input("What is the username of that user? ")
-            del_comment(uname)
+            del_comment(username)
         elif query==0:
             show_menu=False
         else:
             print "error"
 
-start_bot()
+#start_bot()

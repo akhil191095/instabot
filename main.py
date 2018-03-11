@@ -120,7 +120,7 @@ def del_comment(uname):
                 blob = TextBlob(cmnt_text, analyzer=NaiveBayesAnalyzer())
                 if blob.sentiment.p_neg > blob.sentiment.p_pos:
                     print"Negative comment : %s" % cmnt_text
-                    print"Negative comment found: %s" % cmnt_text
+
                     r = requests.delete("%smedia/%s/comments/%s/?access_token=%s" % (BASE_URL, media_id, cmnt_id, APP_ACCESS_TOKEN)).json()
                     if r['meta']['code'] == 200:
                         print"Comment successfully deleted!"
@@ -130,7 +130,7 @@ def del_comment(uname):
 
                 else:
                     print cmnt_text + 'is a positive comment'
-                    print cmnt_text + ' is a positive comment'
+                  
         else:
             print" no comments found"
     else:
